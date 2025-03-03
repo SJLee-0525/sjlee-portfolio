@@ -1,0 +1,301 @@
+#projects-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 80%;
+  height: 100%;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+
+  /* grid-template-columns: 이 속성은 그리드의 열(columns)을 어떻게 배치할지를 설정합니다.
+repeat(auto-fill, ...): 이 부분은 그리드 열의 개수를 자동으로 채우게 만듭니다. auto-fill은 가능한 한 많은 열을 자동으로 채우는 방식입니다. 즉, minmax(350px, 1fr) 조건을 만족하는 열을 채울 수 있을 때마다 열을 추가합니다.
+minmax(350px, 1fr):
+**minmax(350px, 1fr)**는 각 열의 **최소 너비를 350px, 최대 너비를 1fr**로 설정합니다.
+350px: 각 열의 최소 너비는 350픽셀입니다. 즉, 열이 좁아지지 않도록 최소 350px의 너비를 가지게 됩니다.
+1fr: 각 열의 최대 너비는 1fr입니다. fr은 "fractional unit"을 의미하며, 가용 공간을 균등하게 나누는 단위입니다. 즉, 화면 크기에 따라 각 열은 가용 공간을 균등하게 나누어 최대 1fr만큼 너비를 차지합니다. */
+
+  width: 100%;
+  grid-gap: 20px;
+  padding: 20px;
+
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-width: 300px;
+
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+
+  transition: all 0.3s ease;
+}
+
+.project:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+  transition: all 0.3s ease;
+}
+
+.project-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.project-details {
+  width: 100%;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  text-align: start;
+  color: black;
+}
+
+.project-details h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+}
+
+.project-info {
+  margin-bottom: 15px;
+}
+
+.project-info p {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.project-role {
+  padding: 5px 8px;
+  border-radius: 5px;
+  background-color: #224378;
+
+  font-weight: 600;
+  color: white;
+}
+
+#project-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.project-carousel-container {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  height: 45%;
+
+  overflow: hidden;
+}
+
+.project-carousel {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: black;
+  overflow: hidden;
+}
+
+.project-carousel-track {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+
+  transition: transform 0.5s ease-in-out;
+}
+
+.project-carousel-item {
+  min-width: 100%;
+  height: 100%;
+}
+
+.project-carousel-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.project-carousel-container .project-carousel-btn-disabled {
+  display: none;
+}
+
+.project-carousel-container .project-carousel-btn-left {
+  position: absolute;
+  left: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 35px;
+  height: 35px;
+
+  background-color: rgba(0, 0, 0, 0.362);
+  border-radius: 100%;
+  border: 0;
+
+  z-index: 3;
+}
+
+.project-carousel-container .project-carousel-btn-right {
+  position: absolute;
+  right: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 35px;
+  height: 35px;
+
+  background-color: rgba(0, 0, 0, 0.362);
+  border-radius: 100%;
+  border: 0;
+
+  z-index: 3;
+}
+
+.project-carousel-container .btn-icon {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-detail-container {
+  width: 100%;
+  height: 55%;
+
+  box-sizing: border-box;
+  padding: 20px;
+
+  overflow-y: scroll;
+}
+
+.project-detail-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.project-detail-container::-webkit-scrollbar-track {
+  background: #00000000;
+}
+
+.project-detail-container::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border-radius: 10px;
+}
+
+.project-detail-container::-webkit-scrollbar-thumb:hover {
+  background: #777777;
+}
+
+.project-detail-header {
+  margin-bottom: 20px;
+}
+
+.project-detail-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+}
+
+/* .project-detail-body {
+  margin-bottom: 20px;
+} */
+
+.project-detail-body h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+}
+
+.project-overview {
+  margin: 20px 0px;
+}
+
+.project-overview h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+}
+
+.project-overview p {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.project-overview ul {
+  margin: 0 0 10px 0;
+  padding-left: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.project-overview table {
+  width: 70%;
+}
+
+.project-overview table tr {
+  display: flex;
+
+  height: 30px;
+
+  margin: 5px;
+}
+
+.project-overview table tr td {
+  width: 70%;
+
+  border-bottom: 1px solid #555555;
+}
+
+.project-overview table tr .td-title {
+  font-weight: 800;
+  width: 40%;
+}
+
+.project-overview table tr .td-content {
+  font-weight: 500;
+}
+
+.project-overview table tr .td-content .content-elem {
+  margin: 0px 5px;
+}
