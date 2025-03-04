@@ -1,31 +1,81 @@
-import "./Profile.css"
+import "./Profile.css";
+import React, { useState, JSX, useEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Mousewheel } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
-import React, { useState, JSX } from "react"
+import PersonalInfo from "./details/PersonalInfo.tsx";
+import EducationInfo from "./details/EducationInfo.tsx";
+import Awards from "./details/Awards.tsx";
 
-import PersonalInfo from "./details/PersonalInfo.tsx"
-import EducationInfo from "./details/EducationInfo.tsx"
-import Awards from "./details/Awards.tsx"
+import profileImg from "../../assets/profiles/profile_img.jpg";
+import leftIcon from "../../assets/icons/arrow-left-s-line.png";
+import rightIcon from "../../assets/icons/arrow-right-s-line.png";
 
-import profileImg from "../../assets/profiles/profile_img.jpg"
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import leftIcon from "../../assets/icons/arrow-left-s-line.png"
-import rightIcon from "../../assets/icons/arrow-right-s-line.png"
+gsap.registerPlugin(ScrollTrigger);
 
 const Profile: React.FC = () => {
-  const [index, setIndex] = useState<number>(0)
+  const swiperRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isScrollLocked, setIsScrollLocked] = useState(false);
 
-  const components: JSX.Element[] = [<PersonalInfo />, <EducationInfo />, <Awards />]
+  const components: JSX.Element[] = [
+    <PersonalInfo />,
+    <EducationInfo />,
+    <Awards />,
+  ];
 
-  function handleClickLeft(): void {
-    setIndex((prevIndex) => (prevIndex - 1 + components.length) % components.length)
-  }
+  useEffect(() => {
+    let scrollTrigger: ScrollTrigger;
 
-  function handleClickRight(): void {
-    setIndex((prevIndex) => (prevIndex + 1) % components.length)
-  }
+    if (containerRef.current && swiperRef.current) {
+      scrollTrigger = ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          if (swiperRef.current && swiperRef.current.swiper) {
+            const progress = self.progress;
+            const totalSlides = swiperRef.current.swiper.slides.length;
+            const targetIndex = Math.floor(progress * totalSlides);
+
+            if (targetIndex !== swiperRef.current.swiper.activeIndex) {
+              swiperRef.current.swiper.slideTo(targetIndex, 300);
+            }
+
+            setIsScrollLocked(progress > 0 && progress < 1);
+          }
+        },
+        pin: true,
+        pinSpacing: false,
+      });
+    }
+
+    return () => {
+      if (scrollTrigger) scrollTrigger.kill();
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrollLocked) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [isScrollLocked]);
 
   return (
-    <div id="profile-page">
+    <div id="profile-page" ref={containerRef}>
       <h1>About Me</h1>
       <div className="profile-container">
         <div className="profile-image-container">
@@ -33,25 +83,39 @@ const Profile: React.FC = () => {
         </div>
 
         <div className="profile-details">
-          <button className={index === 0 ? "carousel-btn-disabled" : "carousel-btn-left"} onClick={handleClickLeft} disabled={index === 0}>
-            <img className="btn-icon" src={leftIcon} alt="<" />
-          </button>
-          <div className="carousel">
-            <div className="carousel-track" style={{ transform: `translateX(-${index * 100}%)` }}>
-              {components.map((component, i) => (
-                <div key={i} className="carousel-item">
-                  {component}
-                </div>
-              ))}
-            </div>
+          <Swiper
+            ref={swiperRef}
+            modules={[Navigation, Mousewheel]}
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            mousewheel={{
+              forceToAxis: true,
+              sensitivity: 1,
+              releaseOnEdges: true,
+            }}
+            speed={300}
+            loop={false}
+            allowTouchMove={false}
+          >
+            {components.map((component, index) => (
+              <SwiperSlide key={index}>{component}</SwiperSlide>
+            ))}
+          </Swiper>
+
+          <div className="swiper-button-prev">
+            {/* <img className="btn-icon" src={leftIcon} alt="<" /> */}
           </div>
-          <button className={index === components.length - 1 ? "carousel-btn-disabled" : "carousel-btn-right"} onClick={handleClickRight} disabled={index === components.length - 1}>
-            <img className="btn-icon" src={rightIcon} alt=">" />
-          </button>
+          <div className="swiper-button-next">
+            {/* <img className="btn-icon" src={rightIcon} alt=">" /> */}
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

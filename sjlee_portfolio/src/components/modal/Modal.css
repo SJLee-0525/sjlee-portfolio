@@ -22,7 +22,8 @@
 }
 
 .modal {
-  width: 60vw;
+  width: 90vw;
+  max-width: 900px;
   height: 95vh;
 
   margin: auto;
@@ -38,11 +39,6 @@
   animation: slideDown 0.2s ease-out forwards;
 
   transition: all 0.2s ease;
-}
-
-.modal::backdrop {
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(30px);
 }
 
 .modal::-webkit-scrollbar {

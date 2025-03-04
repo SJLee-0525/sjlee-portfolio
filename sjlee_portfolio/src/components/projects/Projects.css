@@ -10,7 +10,7 @@
 
 .projects {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
   /* grid-template-columns: 이 속성은 그리드의 열(columns)을 어떻게 배치할지를 설정합니다.
 repeat(auto-fill, ...): 이 부분은 그리드 열의 개수를 자동으로 채우게 만듭니다. auto-fill은 가능한 한 많은 열을 자동으로 채우는 방식입니다. 즉, minmax(350px, 1fr) 조건을 만족하는 열을 채울 수 있을 때마다 열을 추가합니다.
@@ -20,6 +20,7 @@ minmax(350px, 1fr):
 1fr: 각 열의 최대 너비는 1fr입니다. fr은 "fractional unit"을 의미하며, 가용 공간을 균등하게 나누는 단위입니다. 즉, 화면 크기에 따라 각 열은 가용 공간을 균등하게 나누어 최대 1fr만큼 너비를 차지합니다. */
 
   width: 100%;
+  height: fit-content;
   grid-gap: 20px;
   padding: 20px;
 
@@ -52,7 +53,7 @@ minmax(350px, 1fr):
 
 .project-img {
   width: 100%;
-  height: 250px;
+  height: 200px;
   object-fit: cover;
   border-radius: 10px 10px 0px 0px;
 }
